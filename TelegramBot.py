@@ -9,7 +9,6 @@ import requests
 from enum import Enum
 
 
-
 def sendMessage(token, chat_id, text):
     url = "https://api.telegram.org/bot{}/sendMessage".format(token)
 
@@ -55,28 +54,22 @@ class Host():
         version_dict = json.loads(received)
         return version_dict["result"][0].startswith("ElectrumX")
 
-
     def goto_state_running(self):
         logging.debug("Logging state is turned on running again for %s", self.name)
         self.state = State.running
         self.counter = 0
 
-
     def log_successful_ping(self):
         logging.debug("Ping was successful for %s", self.name)
-
 
     def is_state_running(self):
         return self.state == State.running
 
-
     def reached_rechecktime(self):
         return self.recheck_at < datetime.datetime.now()
 
-
     def reached_max_fails(self):
         return self.counter == self.counter_limit
-
 
     def count_failed_ping(self):
         self.counter += 1
